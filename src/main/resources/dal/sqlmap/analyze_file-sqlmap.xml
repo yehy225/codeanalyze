@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="AnalyzeFileDAO">
+	<!-- Alias Map Defined -->
+	<typeAlias alias="AnalyzeFileQuery" type="com.yehongyu.analyze.dao.query.AnalyzeFileQuery" />
+	<typeAlias alias="AnalyzeFileDO" type="com.yehongyu.analyze.dao.domain.AnalyzeFileDO" />
+	<resultMap id="analyzeFileDO" class="AnalyzeFileDO">
+		<result property="id" column="id" />
+		<result property="filename" column="filename" />
+		<result property="linecount" column="linecount" />
+		<result property="codecount" column="codecount" />
+		<result property="commentcount" column="commentcount" />
+		<result property="blankcount" column="blankcount" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+	</resultMap>
+		
+	<!-- Select SQL -->
+	<sql id="analyzeFileDO.selector">
+		SELECT id,filename,linecount,codecount,commentcount,blankcount,gmt_create,gmt_modified		
+		FROM analyze_file
+	</sql>
+	<sql id="analyzeFileDOList.where">
+		<dynamic>
+			<isNotEmpty property="idList" prepend=" AND ">
+				id in
+				<iterate property="idList" conjunction="," open="(" close=")">
+					#idList[]#
+		        </iterate>
+			</isNotEmpty>
+			<isNotNull property="filename" prepend=" AND ">
+				filename=#filename#
+		  	</isNotNull>
+			<isNotNull property="linecount" prepend=" AND ">
+				linecount=#linecount#
+		  	</isNotNull>
+			<isNotNull property="codecount" prepend=" AND ">
+				codecount=#codecount#
+		  	</isNotNull>
+			<isNotNull property="commentcount" prepend=" AND ">
+				commentcount=#commentcount#
+		  	</isNotNull>
+			<isNotNull property="blankcount" prepend=" AND ">
+				blankcount=#blankcount#
+		  	</isNotNull>
+		</dynamic>
+	</sql>
+	<sql id="analyzeFileDOList.order">
+		<dynamic>
+			ORDER BY 
+			<isNotEmpty property="orderFields">
+				<iterate property="orderFields" conjunction="," open="" close="">
+					#orderFields[].fieldName# #orderFields[].order#
+		        </iterate>
+			</isNotEmpty>
+			<isEmpty property="orderFields">
+				gmt_create DESC
+			</isEmpty>
+		</dynamic>
+	</sql>
+	<select id="AnalyzeFileDAO.getAnalyzeFileDO" parameterClass="AnalyzeFileQuery" resultMap="analyzeFileDO">
+		<include refid="analyzeFileDO.selector" />
+		WHERE id=#id#
+	</select>
+	<select id="AnalyzeFileDAO.getAnalyzeFileDOList" parameterClass="AnalyzeFileQuery" resultMap="analyzeFileDO">
+		<include refid="analyzeFileDO.selector" />
+		WHERE 1=1
+		<include refid="analyzeFileDOList.where" />
+		ORDER BY gmt_create DESC
+	</select>
+	<select id="AnalyzeFileDAO.getAnalyzeFileDOListWithPage" parameterClass="AnalyzeFileQuery" resultMap="analyzeFileDO">
+		<include refid="analyzeFileDO.selector" />
+		WHERE 1=1
+		<include refid="analyzeFileDOList.where" />
+	  	ORDER BY gmt_modified DESC,id DESC
+	  	LIMIT #startRow#,#pageSize#
+	</select>
+	<select id="AnalyzeFileDAO.getAnalyzeFileDOListCount" parameterClass="AnalyzeFileQuery" resultClass="int">
+		SELECT count(*) FROM analyze_file
+		WHERE 1=1
+		<include refid="analyzeFileDOList.where" />
+	</select>
+
+	<!-- Insert SQL -->
+	<insert id="AnalyzeFileDAO.insertAnalyzeFileDO" parameterClass="AnalyzeFileDO">
+		INSERT INTO analyze_file(filename,linecount,codecount,commentcount,blankcount,gmt_create,gmt_modified)
+		VALUES(#filename#,#linecount#,#codecount#,#commentcount#,#blankcount#,now(),now())
+		<selectKey resultClass="long" type="post" keyProperty="id">
+           SELECT last_insert_id() AS id
+		</selectKey>
+	</insert>
+	
+	<!-- Update SQL -->
+	<update id="AnalyzeFileDAO.updateAnalyzeFileDO" parameterClass="AnalyzeFileDO">
+		UPDATE analyze_file SET gmt_modified=now()
+		<isNotNull prepend="," property="filename">
+			filename = #filename#
+      	</isNotNull>
+		<isNotNull prepend="," property="linecount">
+			linecount = #linecount#
+      	</isNotNull>
+		<isNotNull prepend="," property="codecount">
+			codecount = #codecount#
+      	</isNotNull>
+		<isNotNull prepend="," property="commentcount">
+			commentcount = #commentcount#
+      	</isNotNull>
+		<isNotNull prepend="," property="blankcount">
+			blankcount = #blankcount#
+      	</isNotNull>
+		WHERE id = #id#
+	</update>
+	<update id="AnalyzeFileDAO.updateAnalyzeFileDOList" parameterClass="AnalyzeFileDO">
+		UPDATE analyze_file SET gmt_modified=now()
+		<isNotNull prepend="," property="filename">
+			filename = #filename#
+      	</isNotNull>
+		<isNotNull prepend="," property="linecount">
+			linecount = #linecount#
+      	</isNotNull>
+		<isNotNull prepend="," property="codecount">
+			codecount = #codecount#
+      	</isNotNull>
+		<isNotNull prepend="," property="commentcount">
+			commentcount = #commentcount#
+      	</isNotNull>
+		<isNotNull prepend="," property="blankcount">
+			blankcount = #blankcount#
+      	</isNotNull>
+		<dynamic prepend=" WHERE ">
+			<isNotEmpty property="idList" prepend=" AND ">
+				id IN 
+				<iterate property="idList" conjunction="," open="(" close=")">
+					#idList[]#
+		        </iterate>
+			</isNotEmpty>
+		</dynamic>
+	</update>
+	
+	<!-- Delete SQL -->
+	<delete id="AnalyzeFileDAO.deleteAnalyzeFileDO" parameterClass="long">
+		DELETE FROM analyze_file
+		WHERE id = #id#
+  	</delete>
+  	<delete id="AnalyzeFileDAO.deleteAnalyzeFileDOList" parameterClass="AnalyzeFileQuery">
+		DELETE FROM analyze_file
+		<dynamic prepend=" WHERE ">
+			<isNotEmpty property="idList" prepend=" AND ">
+				id IN 
+				<iterate property="idList" conjunction="," open="(" close=")">
+					#idList[]#
+		        </iterate>
+			</isNotEmpty>
+		</dynamic>
+  	</delete>
+</sqlMap>

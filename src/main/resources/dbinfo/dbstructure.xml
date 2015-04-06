@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<db>
+	<tables type="mysql">
+		<table name="all_column_table" comment="InnoDB free: 11264 kB">
+			<fields>
+				<field name="id" type="BIGINT" precision="19" scale="0" nullable="false" defaultValue="" isPk="true" autoIncrement="true" comment="id"/>
+				<field name="col_tinyint" type="TINYINT" precision="3" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_tinyint"/>
+				<field name="col_smallint" type="SMALLINT" precision="5" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_smallint"/>
+				<field name="col_mediumint" type="MEDIUMINT" precision="7" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_mediumint"/>
+				<field name="col_integer" type="INT" precision="10" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_integer"/>
+				<field name="col_float" type="FLOAT" precision="9" scale="3" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_float"/>
+				<field name="col_double" type="DOUBLE" precision="15" scale="3" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_double"/>
+				<field name="col_decimal" type="DECIMAL" precision="11" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_decimal"/>
+				<field name="col_date" type="DATE" precision="10" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_date"/>
+				<field name="col_time" type="TIME" precision="8" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_time"/>
+				<field name="col_year" type="YEAR" precision="0" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_year"/>
+				<field name="col_char" type="CHAR" precision="10" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_char"/>
+				<field name="col_varchar" type="VARCHAR" precision="100" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_varchar"/>
+				<field name="col_tinyblob" type="TINYBLOB" precision="255" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_tinyblob"/>
+				<field name="col_blob" type="BLOB" precision="65535" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_blob"/>
+				<field name="col_mediumblob" type="MEDIUMBLOB" precision="16777215" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_mediumblob"/>
+				<field name="col_longblob" type="LONGBLOB" precision="2147483647" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_longblob"/>
+				<field name="col_tinytext" type="TINYTEXT" precision="255" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_tinytext"/>
+				<field name="col_text" type="MEDIUMTEXT" precision="16777215" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_text"/>
+				<field name="col_mediumtext" type="MEDIUMTEXT" precision="16777215" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_mediumtext"/>
+				<field name="col_longtext" type="LONGTEXT" precision="2147483647" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_longtext"/>
+				<field name="col_geometry" type="GEOMETRY" precision="0" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_geometry"/>
+				<field name="col_binary" type="BINARY" precision="1" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_binary"/>
+				<field name="col_varbinary" type="VARBINARY" precision="1" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="col_varbinary"/>
+				<field name="gmt_create" type="DATETIME" precision="19" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="gmt_create"/>
+				<field name="gmt_modified" type="TIMESTAMP" precision="19" scale="0" nullable="true" defaultValue="CURRENT_TIMESTAMP" isPk="false" autoIncrement="false" comment="gmt_modified"/>
+			</fields>
+			<indexs>
+				<index name="PK_PRIMARY" isUnique="true" isPrimary="true" columns="id"></index>
+			</indexs>
+		</table>
+		<table name="analyze_file" comment="analyze_file">
+			<fields>
+				<field name="id" type="BIGINT" precision="19" scale="0" nullable="false" defaultValue="" isPk="true" autoIncrement="true" comment="id"/>
+				<field name="filename" type="VARCHAR" precision="200" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="filename"/>
+				<field name="linecount" type="INT" precision="10" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="linecount"/>
+				<field name="codecount" type="INT" precision="10" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="codecount"/>
+				<field name="commentcount" type="INT" precision="10" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="commentcount"/>
+				<field name="blankcount" type="INT" precision="10" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="blankcount"/>
+				<field name="gmt_create" type="DATETIME" precision="19" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="gmt_create"/>
+				<field name="gmt_modified" type="TIMESTAMP" precision="19" scale="0" nullable="true" defaultValue="CURRENT_TIMESTAMP" isPk="false" autoIncrement="false" comment="gmt_modified"/>
+			</fields>
+			<indexs>
+				<index name="PK_PRIMARY" isUnique="true" isPrimary="true" columns="id"></index>
+				<index name="IDX_filename" isUnique="false" isPrimary="false" columns="filename"></index>
+			</indexs>
+		</table>
+		<table name="class_ref" comment="class_ref">
+			<fields>
+				<field name="id" type="BIGINT" precision="19" scale="0" nullable="false" defaultValue="" isPk="true" autoIncrement="true" comment="id"/>
+				<field name="class_name" type="VARCHAR" precision="200" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="class_name"/>
+				<field name="ref_class" type="VARCHAR" precision="200" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="ref_class"/>
+				<field name="gmt_create" type="DATETIME" precision="19" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="gmt_create"/>
+				<field name="gmt_modified" type="TIMESTAMP" precision="19" scale="0" nullable="true" defaultValue="CURRENT_TIMESTAMP" isPk="false" autoIncrement="false" comment="gmt_modified"/>
+			</fields>
+			<indexs>
+				<index name="PK_PRIMARY" isUnique="true" isPrimary="true" columns="id"></index>
+			</indexs>
+		</table>
+		<table name="package_class" comment="package_class">
+			<fields>
+				<field name="id" type="BIGINT" precision="19" scale="0" nullable="false" defaultValue="" isPk="true" autoIncrement="true" comment="id"/>
+				<field name="module_path" type="VARCHAR" precision="200" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="module_path"/>
+				<field name="package_name" type="VARCHAR" precision="200" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="package_name"/>
+				<field name="class_name" type="VARCHAR" precision="200" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="class_name"/>
+				<field name="gmt_create" type="DATETIME" precision="19" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="gmt_create"/>
+				<field name="gmt_modified" type="TIMESTAMP" precision="19" scale="0" nullable="true" defaultValue="CURRENT_TIMESTAMP" isPk="false" autoIncrement="false" comment="gmt_modified"/>
+				<field name="file_name" type="VARCHAR" precision="200" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="file_name"/>
+			</fields>
+			<indexs>
+				<index name="PK_PRIMARY" isUnique="true" isPrimary="true" columns="id"></index>
+			</indexs>
+		</table>
+		<table name="sys_menu" comment="sys_menu">
+			<fields>
+				<field name="id" type="BIGINT" precision="19" scale="0" nullable="false" defaultValue="" isPk="true" autoIncrement="true" comment="id"/>
+				<field name="menucode" type="VARCHAR" precision="40" scale="0" nullable="false" defaultValue="" isPk="false" autoIncrement="false" comment="menucode"/>
+				<field name="menuname" type="VARCHAR" precision="40" scale="0" nullable="false" defaultValue="" isPk="false" autoIncrement="false" comment="menuname"/>
+				<field name="menuurl" type="VARCHAR" precision="255" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="menuurl"/>
+				<field name="menulevel" type="TINYINT" precision="3" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="menulevel"/>
+				<field name="isleaf" type="TINYINT" precision="3" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="isleaf"/>
+				<field name="parentscode" type="VARCHAR" precision="40" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="parentscode"/>
+				<field name="rootcode" type="VARCHAR" precision="40" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="rootcode"/>
+				<field name="displayorder" type="CHAR" precision="10" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="displayorder"/>
+				<field name="status" type="TINYINT" precision="3" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="status"/>
+				<field name="issys" type="TINYINT" precision="3" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="issys"/>
+				<field name="gmt_create" type="DATETIME" precision="19" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="gmt_create"/>
+				<field name="gmt_modified" type="TIMESTAMP" precision="19" scale="0" nullable="true" defaultValue="CURRENT_TIMESTAMP" isPk="false" autoIncrement="false" comment="gmt_modified"/>
+			</fields>
+			<indexs>
+				<index name="PK_PRIMARY" isUnique="true" isPrimary="true" columns="id"></index>
+			</indexs>
+		</table>
+		<table name="sys_user" comment="sys_user">
+			<fields>
+				<field name="id" type="BIGINT" precision="19" scale="0" nullable="false" defaultValue="" isPk="true" autoIncrement="true" comment="id"/>
+				<field name="username" type="VARCHAR" precision="64" scale="0" nullable="false" defaultValue="" isPk="false" autoIncrement="false" comment="username"/>
+				<field name="password" type="VARCHAR" precision="100" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="password"/>
+				<field name="name" type="VARCHAR" precision="64" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="name"/>
+				<field name="issys" type="TINYINT" precision="3" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="issys"/>
+				<field name="status" type="TINYINT" precision="3" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="status"/>
+				<field name="memo" type="VARCHAR" precision="200" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="memo"/>
+				<field name="gmt_create" type="DATETIME" precision="19" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="gmt_create"/>
+				<field name="gmt_modified" type="TIMESTAMP" precision="19" scale="0" nullable="true" defaultValue="CURRENT_TIMESTAMP" isPk="false" autoIncrement="false" comment="gmt_modified"/>
+			</fields>
+			<indexs>
+				<index name="PK_PRIMARY" isUnique="true" isPrimary="true" columns="id"></index>
+			</indexs>
+		</table>
+		<table name="sys_user_menu" comment="sys_user_menu">
+			<fields>
+				<field name="id" type="BIGINT" precision="19" scale="0" nullable="false" defaultValue="" isPk="true" autoIncrement="true" comment="id"/>
+				<field name="userid" type="BIGINT" precision="19" scale="0" nullable="false" defaultValue="" isPk="false" autoIncrement="false" comment="userid"/>
+				<field name="menuid" type="BIGINT" precision="19" scale="0" nullable="false" defaultValue="" isPk="false" autoIncrement="false" comment="menuid"/>
+				<field name="gmt_create" type="DATETIME" precision="19" scale="0" nullable="true" defaultValue="" isPk="false" autoIncrement="false" comment="gmt_create"/>
+				<field name="gmt_modified" type="TIMESTAMP" precision="19" scale="0" nullable="true" defaultValue="CURRENT_TIMESTAMP" isPk="false" autoIncrement="false" comment="gmt_modified"/>
+			</fields>
+			<indexs>
+				<index name="PK_PRIMARY" isUnique="true" isPrimary="true" columns="id"></index>
+				<index name="fk_sum_reference_su" isUnique="false" isPrimary="false" columns="userid"></index>
+				<index name="fk_sum_reference_sm" isUnique="false" isPrimary="false" columns="menuid"></index>
+			</indexs>
+		</table>
+	</tables>
+</db>

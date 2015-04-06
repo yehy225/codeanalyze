@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="ClassRefDAO">
+	<!-- Alias Map Defined -->
+	<typeAlias alias="ClassRefQuery" type="com.yehongyu.analyze.dao.query.ClassRefQuery" />
+	<typeAlias alias="ClassRefDO" type="com.yehongyu.analyze.dao.domain.ClassRefDO" />
+	<resultMap id="classRefDO" class="ClassRefDO">
+		<result property="id" column="id" />
+		<result property="className" column="class_name" />
+		<result property="refClass" column="ref_class" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+	</resultMap>
+		
+	<!-- Select SQL -->
+	<sql id="classRefDO.selector">
+		SELECT id,class_name,ref_class,gmt_create,gmt_modified		
+		FROM class_ref
+	</sql>
+	<sql id="classRefDOList.where">
+		<dynamic>
+			<isNotEmpty property="idList" prepend=" AND ">
+				id in
+				<iterate property="idList" conjunction="," open="(" close=")">
+					#idList[]#
+		        </iterate>
+			</isNotEmpty>
+			<isNotNull property="className" prepend=" AND ">
+				class_name=#className#
+		  	</isNotNull>
+			<isNotNull property="refClass" prepend=" AND ">
+				ref_class=#refClass#
+		  	</isNotNull>
+		</dynamic>
+	</sql>
+	<sql id="classRefDOList.order">
+		<dynamic>
+			ORDER BY 
+			<isNotEmpty property="orderFields">
+				<iterate property="orderFields" conjunction="," open="" close="">
+					#orderFields[].fieldName# #orderFields[].order#
+		        </iterate>
+			</isNotEmpty>
+			<isEmpty property="orderFields">
+				gmt_create DESC
+			</isEmpty>
+		</dynamic>
+	</sql>
+	<select id="ClassRefDAO.getClassRefDO" parameterClass="ClassRefQuery" resultMap="classRefDO">
+		<include refid="classRefDO.selector" />
+		WHERE id=#id#
+	</select>
+	<select id="ClassRefDAO.getClassRefDOList" parameterClass="ClassRefQuery" resultMap="classRefDO">
+		<include refid="classRefDO.selector" />
+		WHERE 1=1
+		<include refid="classRefDOList.where" />
+		ORDER BY gmt_create DESC
+	</select>
+	<select id="ClassRefDAO.getClassRefDOListWithPage" parameterClass="ClassRefQuery" resultMap="classRefDO">
+		<include refid="classRefDO.selector" />
+		WHERE 1=1
+		<include refid="classRefDOList.where" />
+	  	ORDER BY gmt_modified DESC,id DESC
+	  	LIMIT #startRow#,#pageSize#
+	</select>
+	<select id="ClassRefDAO.getClassRefDOListCount" parameterClass="ClassRefQuery" resultClass="int">
+		SELECT count(*) FROM class_ref
+		WHERE 1=1
+		<include refid="classRefDOList.where" />
+	</select>
+
+	<!-- Insert SQL -->
+	<insert id="ClassRefDAO.insertClassRefDO" parameterClass="ClassRefDO">
+		INSERT INTO class_ref(class_name,ref_class,gmt_create,gmt_modified)
+		VALUES(#className#,#refClass#,now(),now())
+		<selectKey resultClass="long" type="post" keyProperty="id">
+           SELECT last_insert_id() AS id
+		</selectKey>
+	</insert>
+	
+	<!-- Update SQL -->
+	<update id="ClassRefDAO.updateClassRefDO" parameterClass="ClassRefDO">
+		UPDATE class_ref SET gmt_modified=now()
+		<isNotNull prepend="," property="className">
+			class_name = #className#
+      	</isNotNull>
+		<isNotNull prepend="," property="refClass">
+			ref_class = #refClass#
+      	</isNotNull>
+		WHERE id = #id#
+	</update>
+	<update id="ClassRefDAO.updateClassRefDOList" parameterClass="ClassRefDO">
+		UPDATE class_ref SET gmt_modified=now()
+		<isNotNull prepend="," property="className">
+			class_name = #className#
+      	</isNotNull>
+		<isNotNull prepend="," property="refClass">
+			ref_class = #refClass#
+      	</isNotNull>
+		<dynamic prepend=" WHERE ">
+			<isNotEmpty property="idList" prepend=" AND ">
+				id IN 
+				<iterate property="idList" conjunction="," open="(" close=")">
+					#idList[]#
+		        </iterate>
+			</isNotEmpty>
+		</dynamic>
+	</update>
+	
+	<!-- Delete SQL -->
+	<delete id="ClassRefDAO.deleteClassRefDO" parameterClass="long">
+		DELETE FROM class_ref
+		WHERE id = #id#
+  	</delete>
+  	<delete id="ClassRefDAO.deleteClassRefDOList" parameterClass="ClassRefQuery">
+		DELETE FROM class_ref
+		<dynamic prepend=" WHERE ">
+			<isNotEmpty property="idList" prepend=" AND ">
+				id IN 
+				<iterate property="idList" conjunction="," open="(" close=")">
+					#idList[]#
+		        </iterate>
+			</isNotEmpty>
+		</dynamic>
+  	</delete>
+</sqlMap>

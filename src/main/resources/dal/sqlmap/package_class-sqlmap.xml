@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="PackageClassDAO">
+	<!-- Alias Map Defined -->
+	<typeAlias alias="PackageClassQuery" type="com.yehongyu.analyze.dao.query.PackageClassQuery" />
+	<typeAlias alias="PackageClassDO" type="com.yehongyu.analyze.dao.domain.PackageClassDO" />
+	<resultMap id="packageClassDO" class="PackageClassDO">
+		<result property="id" column="id" />
+		<result property="modulePath" column="module_path" />
+		<result property="packageName" column="package_name" />
+		<result property="className" column="class_name" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="fileName" column="file_name" />
+	</resultMap>
+		
+	<!-- Select SQL -->
+	<sql id="packageClassDO.selector">
+		SELECT id,module_path,package_name,class_name,gmt_create,gmt_modified,file_name		
+		FROM package_class
+	</sql>
+	<sql id="packageClassDOList.where">
+		<dynamic>
+			<isNotEmpty property="idList" prepend=" AND ">
+				id in
+				<iterate property="idList" conjunction="," open="(" close=")">
+					#idList[]#
+		        </iterate>
+			</isNotEmpty>
+			<isNotNull property="modulePath" prepend=" AND ">
+				module_path=#modulePath#
+		  	</isNotNull>
+			<isNotNull property="packageName" prepend=" AND ">
+				package_name=#packageName#
+		  	</isNotNull>
+			<isNotNull property="className" prepend=" AND ">
+				class_name=#className#
+		  	</isNotNull>
+			<isNotNull property="fileName" prepend=" AND ">
+				file_name=#fileName#
+		  	</isNotNull>
+		</dynamic>
+	</sql>
+	<sql id="packageClassDOList.order">
+		<dynamic>
+			ORDER BY 
+			<isNotEmpty property="orderFields">
+				<iterate property="orderFields" conjunction="," open="" close="">
+					#orderFields[].fieldName# #orderFields[].order#
+		        </iterate>
+			</isNotEmpty>
+			<isEmpty property="orderFields">
+				gmt_create DESC
+			</isEmpty>
+		</dynamic>
+	</sql>
+	<select id="PackageClassDAO.getPackageClassDO" parameterClass="PackageClassQuery" resultMap="packageClassDO">
+		<include refid="packageClassDO.selector" />
+		WHERE id=#id#
+	</select>
+	<select id="PackageClassDAO.getPackageClassDOList" parameterClass="PackageClassQuery" resultMap="packageClassDO">
+		<include refid="packageClassDO.selector" />
+		WHERE 1=1
+		<include refid="packageClassDOList.where" />
+		ORDER BY gmt_create DESC
+	</select>
+	<select id="PackageClassDAO.getPackageClassDOListWithPage" parameterClass="PackageClassQuery" resultMap="packageClassDO">
+		<include refid="packageClassDO.selector" />
+		WHERE 1=1
+		<include refid="packageClassDOList.where" />
+	  	ORDER BY gmt_modified DESC,id DESC
+	  	LIMIT #startRow#,#pageSize#
+	</select>
+	<select id="PackageClassDAO.getPackageClassDOListCount" parameterClass="PackageClassQuery" resultClass="int">
+		SELECT count(*) FROM package_class
+		WHERE 1=1
+		<include refid="packageClassDOList.where" />
+	</select>
+
+	<!-- Insert SQL -->
+	<insert id="PackageClassDAO.insertPackageClassDO" parameterClass="PackageClassDO">
+		INSERT INTO package_class(module_path,package_name,class_name,file_name,gmt_create,gmt_modified)
+		VALUES(#modulePath#,#packageName#,#className#,#fileName#,now(),now())
+		<selectKey resultClass="long" type="post" keyProperty="id">
+           SELECT last_insert_id() AS id
+		</selectKey>
+	</insert>
+	
+	<!-- Update SQL -->
+	<update id="PackageClassDAO.updatePackageClassDO" parameterClass="PackageClassDO">
+		UPDATE package_class SET gmt_modified=now()
+		<isNotNull prepend="," property="modulePath">
+			module_path = #modulePath#
+      	</isNotNull>
+		<isNotNull prepend="," property="packageName">
+			package_name = #packageName#
+      	</isNotNull>
+		<isNotNull prepend="," property="className">
+			class_name = #className#
+      	</isNotNull>
+		<isNotNull prepend="," property="fileName">
+			file_name = #fileName#
+      	</isNotNull>
+		WHERE id = #id#
+	</update>
+	<update id="PackageClassDAO.updatePackageClassDOList" parameterClass="PackageClassDO">
+		UPDATE package_class SET gmt_modified=now()
+		<isNotNull prepend="," property="modulePath">
+			module_path = #modulePath#
+      	</isNotNull>
+		<isNotNull prepend="," property="packageName">
+			package_name = #packageName#
+      	</isNotNull>
+		<isNotNull prepend="," property="className">
+			class_name = #className#
+      	</isNotNull>
+		<isNotNull prepend="," property="fileName">
+			file_name = #fileName#
+      	</isNotNull>
+		<dynamic prepend=" WHERE ">
+			<isNotEmpty property="idList" prepend=" AND ">
+				id IN 
+				<iterate property="idList" conjunction="," open="(" close=")">
+					#idList[]#
+		        </iterate>
+			</isNotEmpty>
+		</dynamic>
+	</update>
+	
+	<!-- Delete SQL -->
+	<delete id="PackageClassDAO.deletePackageClassDO" parameterClass="long">
+		DELETE FROM package_class
+		WHERE id = #id#
+  	</delete>
+  	<delete id="PackageClassDAO.deletePackageClassDOList" parameterClass="PackageClassQuery">
+		DELETE FROM package_class
+		<dynamic prepend=" WHERE ">
+			<isNotEmpty property="idList" prepend=" AND ">
+				id IN 
+				<iterate property="idList" conjunction="," open="(" close=")">
+					#idList[]#
+		        </iterate>
+			</isNotEmpty>
+		</dynamic>
+  	</delete>
+</sqlMap>
